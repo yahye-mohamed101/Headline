@@ -1,4 +1,4 @@
-import { seedArticles } from "./article_seeds";
+import { seedArticles } from "./article_seeds.js";
 import sequelize from '../config/connection.js';
 
 const seedAll = async (): Promise<void> => {

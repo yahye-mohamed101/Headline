@@ -1,6 +1,6 @@
 import express from 'express';
 import type { Request, Response } from 'express';
-import { Article } from '../../models/index.js';
+import { Article } from '../models/index.js';
 
 const router = express.Router();
 
@@ -38,3 +38,5 @@ router.get('/article/:id', async (req: Request, res: Response) => {
         res.status(500).json({ message: error.message }); 
     }
 });
+
+export default router
