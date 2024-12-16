@@ -24,3 +24,17 @@ router.get('/article', async (_req: Request, res: Response) => {
         res.status(500).json({ message: error.message });
     };
 });
+
+
+router.get('/article/:id', async (req: Request, res: Response) => {
+    try {
+        const article = await Article.findByPk(req.params.id);
+        if (article) {
+            res.json(article);
+        } else {
+            res.status(404).json({ message: 'Article not found' });
+        }
+    } catch (error: any) {
+        res.status(500).json({ message: error.message }); 
+    }
+});
