@@ -20,8 +20,23 @@ export const seedArticles = async () => {
                         publishedAt: "2024-12-16T19:37:16.8603434Z",
                         content: "The Christmas morning church service in Sandringham is a big event in the royal calendar, bringing together the Royal Family for a public appearance, with crowds and photographers capturing the momen… [+2052 chars]"
                     },
+                    {
+                        source: {
+                            id: "bbc-news",
+                            name: "BBC News"
+                        },
+                        author: "BBC News",
+                        title: "Robbie Williams explains why he's a monkey in his new movie",
+                        description: "Better Man tells the story of Robbie Williams' life, with him portrayed by a CGI monkey.",
+                        url: "https://www.bbc.co.uk/news/articles/cg7r21egd82o",
+                        urlToImage: "https://ichef.bbci.co.uk/ace/branded_news/1200/cpsprodpb/0b6a/live/c343c390-bb84-11ef-aff0-072ce821b6ab.jpg",
+                        publishedAt: "2024-12-16T19:07:21.3759426Z",
+                        content: "For a year and half, Williams and Gracey had been sending messages back and forth, discussing a possible film musical based on his life.\r\n\"There have been a lot of musical biopics,\" says Gracey. \"I w… [+729 chars]"
+                    },
                 ]
             },
+
+            
         ]
         await Article.bulkCreate(articles)
         console.log('Article has been successfully seeded.');
