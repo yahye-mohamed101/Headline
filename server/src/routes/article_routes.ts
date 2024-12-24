@@ -16,14 +16,26 @@ router.post('/article', async (req: Request, res: Response) => {
 });
 
 //GET endpoint to retrieve all articles 
-router.get('/article', async (_req: Request, res: Response) => {
+router.get('/article', async (req: Request, res: Response) => {
+    const { page = 1, limit = 10 } = req.query;
+    const offset = (page - 1) * limit;
+
     try {
-        const articles = await Article.findAll();
-        res.json(articles)
+        const articles = await Article.findAndCountAll({
+            limit: parseInt(limit),
+            offset: parseInt(offset),
+        });
+        res.json({
+            totalResults: articles.count,
+            totalPages: Math.ceil(articles.count / limit),
+            currentPage: page,
+            articles: articles.rows,
+        });
     } catch (error: any) {
         res.status(500).json({ message: error.message });
-    };
+    }
 });
+
 
 
 router.get('/article/:id', async (req: Request, res: Response) => {

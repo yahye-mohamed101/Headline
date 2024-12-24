@@ -21,10 +21,15 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@shadcn/ui": "^0.0.4",
     "bulma": "^1.0.2",
     "dotenv": "^16.4.7",
     "express": "^4.21.1",
-    "react-router-dom": "^6.27.0"
+    "lucide-react": "^0.469.0",
+    "react": "^19.0.0",
+    "react-router-dom": "^6.28.1",
+    "tailwindcss": "^3.4.17",
+    "zod": "^3.24.1"
   },
   "devDependencies": {
     "concurrently": "^8.2.2",
