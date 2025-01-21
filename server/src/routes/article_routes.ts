@@ -1,54 +1,43 @@
 import express from 'express';
 import type { Request, Response } from 'express';
 import { Article } from '../models/index.js';
+import { fetchLatestNews, fetchNewsByCategory } from '../api/newsApiService';
 
 const router = express.Router();
 
-//POST endpoint to create a new article
-router.post('/article', async (req: Request, res: Response) => {
-    const { status, totalResults, articles } = req.body;
-    try {
-        const newArticle = await Article.create({ status, totalResults, articles });
-        res.status(201).json(newArticle);
-    } catch (error: any) {
-        res.status(400).json({ message: error.message });
-    }
-});
-
-//GET endpoint to retrieve all articles 
+// GET endpoint to retrieve all articles
 router.get('/article', async (req: Request, res: Response) => {
-    const { page = 1, limit = 10 } = req.query;
-    const offset = (page - 1) * limit;
+    const page = Number(req.query.page) || 1;
+    const limit = Number(req.query.limit) || 20;
+    const category = req.query.category as string;
 
     try {
-        const articles = await Article.findAndCountAll({
-            limit: parseInt(limit),
-            offset: parseInt(offset),
+        let newsData;
+        if (category && category !== 'All') {
+            newsData = await fetchNewsByCategory(category, page, limit);
+        } else {
+            newsData = await fetchLatestNews(page, limit);
+        }
+
+        // Store the fetched articles in the database
+        await Article.create({
+            status: newsData.status,
+            totalResults: newsData.totalResults,
+            articles: newsData.articles
         });
+
         res.json({
-            totalResults: articles.count,
-            totalPages: Math.ceil(articles.count / limit),
+            totalResults: newsData.totalResults,
+            totalPages: Math.ceil(newsData.totalResults / limit),
             currentPage: page,
-            articles: articles.rows,
+            articles: newsData.articles
         });
     } catch (error: any) {
+        console.error('Error handling articles:', error);
         res.status(500).json({ message: error.message });
     }
 });
 
+// Other routes remain the same...
 
-
-router.get('/article/:id', async (req: Request, res: Response) => {
-    try {
-        const article = await Article.findByPk(req.params.id);
-        if (article) {
-            res.json(article);
-        } else {
-            res.status(404).json({ message: 'Article not found' });
-        }
-    } catch (error: any) {
-        res.status(500).json({ message: error.message }); 
-    }
-});
-
-export default router
+export default router;

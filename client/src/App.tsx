@@ -1,16 +1,26 @@
-import React from 'react';
-import ArticleList from './components/ArticleList';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { HomePage } from './pages/homePage.tsx';
+import { AboutPage } from './pages/aboutPage.tsx';
+import { ArticleDetails } from './pages/articleDetails.tsx';
+import { ErrorPage } from './pages/errorPage.tsx';
+import { Header } from './components/Header.tsx';
+import { Footer } from './components/Footer.tsx';
 
 function App() {
     return (
-        <div className="App">
-            <header>
-                <h1>News Articles</h1>
-            </header>
-            <main>
-                <ArticleList />
-            </main>
-        </div>
+        <BrowserRouter>
+            <div className="flex flex-col min-h-screen">
+                <Header />
+                <main className="flex-grow">
+                    <Routes>
+                        <Route path="/" element={<HomePage />} errorElement={<ErrorPage />} />
+                        <Route path="/about" element={<AboutPage />} />
+                        <Route path="/article/:id" element={<ArticleDetails />} />
+                    </Routes>
+                </main>
+                <Footer />
+            </div>
+        </BrowserRouter>
     );
 }
 

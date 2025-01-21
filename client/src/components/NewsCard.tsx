@@ -156,8 +156,8 @@
 
 // export default NewsApp;
 
-import React from 'react';
-import './NewsCard.css';
+
+import '../assets/NewsCard.css';
 import { Article } from '../interfaces/HeadlineIF';
 
 interface NewsCardProps {

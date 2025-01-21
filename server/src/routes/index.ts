@@ -1,8 +1,9 @@
 import { Router } from 'express';
-import articleRoutes from "./article_routes.js"
+import articleRoutes from "./article_routes.js";
 
 const router = Router();
 
-router.use("/article", articleRoutes);
+// Use articleRoutes directly without additional /article prefix
+router.use(articleRoutes);
 
-export default router
+export default router;

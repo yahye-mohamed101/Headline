@@ -1,10 +1,15 @@
-
-{ "extends": "../tsconfig.json",
+{
+  "extends": "../tsconfig.json",
   "compilerOptions": {
     "rootDir": "src",
-    "outDir": "dist"
+    "outDir": "dist",
+    "module": "ESNext",
+    "target": "ES2020", // CommonJS is recommended for Node.js unless you're using ES modules
+    "moduleResolution": "Node", // Node module resolution for server-side compatibility
+    "typeRoots": ["./node_modules/@types", "./src/types"],
+    "strict": true,
+    "noImplicitAny": true
   },
   "include": ["src"],
-  "typeRoots": ["./node_modules/@types", "./src/types"]
+  "exclude": ["node_modules", "dist"]
 }
-

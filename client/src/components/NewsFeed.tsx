@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { fetchNews, fetchSources } from "../utils/newsService.tsx";
 import { Article } from "../interfaces/HeadlineIF.tsx";
-import "./NewsFeed.css";
+import "../assets/NewsFeed.css";
 
 const NewsFeed = () => {
     const [news, setNews] = useState<Article[]>([]);  // Type the news state as an array of Article
