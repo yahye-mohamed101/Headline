@@ -1,11 +1,8 @@
 import NewsAPI from 'newsapi';
-
 if (!process.env.NEWS_API_KEY) {
     throw new Error('NEWS_API_KEY must be defined in environment variables');
 }
-
 const newsapi = new NewsAPI(process.env.NEWS_API_KEY);
-
 export const fetchLatestNews = async (page = 1, pageSize = 20) => {
     try {
         const response = await newsapi.v2.topHeadlines({
@@ -13,19 +10,18 @@ export const fetchLatestNews = async (page = 1, pageSize = 20) => {
             page,
             pageSize
         });
-
         return {
             status: response.status,
             totalResults: response.totalResults,
             articles: response.articles
         };
-    } catch (error) {
+    }
+    catch (error) {
         console.error('Error fetching news from API:', error);
         throw error;
     }
 };
-
-export const fetchNewsByCategory = async (category: string, page = 1, pageSize = 20) => {
+export const fetchNewsByCategory = async (category, page = 1, pageSize = 20) => {
     try {
         const response = await newsapi.v2.topHeadlines({
             category,
@@ -33,13 +29,13 @@ export const fetchNewsByCategory = async (category: string, page = 1, pageSize =
             page,
             pageSize
         });
-
         return {
             status: response.status,
             totalResults: response.totalResults,
             articles: response.articles
         };
-    } catch (error) {
+    }
+    catch (error) {
         console.error('Error fetching category news from API:', error);
         throw error;
     }

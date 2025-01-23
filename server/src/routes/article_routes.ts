@@ -1,7 +1,7 @@
 import express from 'express';
 import type { Request, Response } from 'express';
 import { Article } from '../models/index.js';
-import { fetchLatestNews, fetchNewsByCategory } from '../api/newsApiService';
+import { fetchLatestNews, fetchNewsByCategory } from '../api/newsApiService.js';
 
 const router = express.Router();
 
