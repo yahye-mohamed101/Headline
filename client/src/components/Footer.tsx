@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Facebook, Twitter, Instagram, Mail, Phone } from 'lucide-react';
+import '../assets/Footer.css'
+import '../assets/Global.css'
 
 export const Footer = () => {
   return (
@@ -9,7 +11,7 @@ export const Footer = () => {
           {/* Brand Section */}
           <div className="space-y-4">
             <h2 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent">
-              NewsHub
+              HeadLine
             </h2>
             <p className="text-gray-600 dark:text-gray-400">
               Your trusted source for the latest news and updates.
@@ -77,7 +79,7 @@ export const Footer = () => {
             <ul className="space-y-2">
               <li className="flex items-center space-x-2 text-gray-600 dark:text-gray-400">
                 <Mail className="h-5 w-5" />
-                <span>info@newshub.com</span>
+                <span>info@headline.com</span>
               </li>
               <li className="flex items-center space-x-2 text-gray-600 dark:text-gray-400">
                 <Phone className="h-5 w-5" />
@@ -89,7 +91,7 @@ export const Footer = () => {
 
         <div className="mt-8 pt-8 border-t border-gray-200 dark:border-gray-800">
           <p className="text-center text-gray-500 dark:text-gray-400">
-            © {new Date().getFullYear()} NewsHub. All rights reserved.
+            © {new Date().getFullYear()} HeadLine. All rights reserved.
           </p>
         </div>
       </div>

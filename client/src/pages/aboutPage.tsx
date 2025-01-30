@@ -1,4 +1,5 @@
 import { Globe, Users, Shield, Mail } from 'lucide-react';
+import '../assets/AboutPage.css'
 
 export const AboutPage = () => {
   const features = [
@@ -25,7 +26,7 @@ export const AboutPage = () => {
       <div className="bg-gradient-to-b from-blue-50 to-white dark:from-gray-800 dark:to-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
           <h1 className="text-4xl md:text-5xl font-bold text-center text-gray-900 dark:text-white mb-6">
-            About NewsHub
+            About HeadLine
           </h1>
           <p className="text-xl text-gray-600 dark:text-gray-300 text-center max-w-3xl mx-auto">
             Your trusted source for the latest news and updates from around the world.

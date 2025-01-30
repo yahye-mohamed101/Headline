@@ -5,6 +5,7 @@ import { ArticleDetails } from './pages/articleDetails.tsx';
 import { ErrorPage } from './pages/errorPage.tsx';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
+import './assets/Global.css'
 
 function App() {
     return (

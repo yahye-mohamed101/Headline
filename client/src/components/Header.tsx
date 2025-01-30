@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
 import { Menu, Moon, Sun, X } from 'lucide-react';
 import { useState, useEffect } from 'react';
+import '../assets/Global.css'
+import '../assets/Header.css'
 
 export const Header = () => {
   const [isDark, setIsDark] = useState(false);
@@ -25,7 +27,7 @@ export const Header = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2">
             <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent">
-              NewsHub
+              HeadLine
             </span>
           </Link>
 

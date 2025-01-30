@@ -1,3 +1,6 @@
+import '../assets/Filter.css'
+import '../assets/Global.css'
+
 interface FilterProps {
     onFilterChange: (category: string) => void;
     selectedCategory: string;

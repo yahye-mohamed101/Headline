@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { Search, X } from 'lucide-react';
+import '../assets/Global.css'
+import '../assets/SearchBar.css'
 
 interface SearchBarProps {
   onSearch: (query: string) => void;

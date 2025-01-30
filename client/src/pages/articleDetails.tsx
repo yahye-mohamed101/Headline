@@ -3,6 +3,8 @@ import { useParams, Link } from 'react-router-dom';
 import { Clock, User, ArrowLeft, Share2 } from 'lucide-react';
 import { Loading } from '../components/Loading';
 import type { Article } from '../interfaces/HeadlineIF';
+import '../assets/ArticleDetails.css'
+import '../assets/Global.css'
 
 export const ArticleDetails = () => {
   const { id } = useParams<{ id: string }>();
