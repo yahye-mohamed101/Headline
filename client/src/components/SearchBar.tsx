@@ -1,47 +1,60 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Search, X } from 'lucide-react';
 
 interface SearchBarProps {
-    onSearch: (query: string) => void;
+  onSearch: (query: string) => void;
 }
 
 export const SearchBar = ({ onSearch }: SearchBarProps) => {
-    const [query, setQuery] = useState('');
+  const [query, setQuery] = useState('');
+  const [isFocused, setIsFocused] = useState(false);
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        onSearch(query);
-    };
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    onSearch(query);
+  };
 
-    const handleClear = () => {
-        setQuery('');
-        onSearch('');
-    };
+  const handleClear = () => {
+    setQuery('');
+    onSearch('');
+  };
 
-    return (
-        <form onSubmit={handleSubmit} className="w-full max-w-3xl mx-auto mb-8">
-            <div className="relative group">
-                <input
-                    type="search"
-                    value={query}
-                    onChange={(e) => setQuery(e.target.value)}
-                    placeholder="Search for news articles..."
-                    className="w-full px-4 py-3 pl-12 pr-10 border-2 border-gray-200 rounded-lg 
-                             focus:outline-none focus:border-blue-500 transition-colors
-                             bg-white shadow-sm hover:shadow-md transition-shadow duration-200"
-                />
-                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400 group-focus-within:text-blue-500 transition-colors" />
-                
-                {query && (
-                    <button
-                        type="button"
-                        onClick={handleClear}
-                        className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
-                    >
-                        <X size={18} />
-                    </button>
-                )}
+  return (
+    <div className="max-w-2xl mx-auto px-4 w-full">
+      <form onSubmit={handleSubmit} className="relative">
+        <div className={`
+          relative rounded-full shadow-sm transition-all duration-300
+          ${isFocused ? 'ring-2 ring-blue-500 ring-offset-2' : ''}
+        `}>
+          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <Search className="h-5 w-5 text-gray-400" />
+          </div>
+
+          <input
+            type="text"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            onFocus={() => setIsFocused(true)}
+            onBlur={() => setIsFocused(false)}
+            placeholder="Search for news articles..."
+            className="block w-full pl-10 pr-12 py-3 border-gray-200 rounded-full focus:outline-none
+                     bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white
+                     placeholder-gray-500 dark:placeholder-gray-400"
+          />
+
+          {query && (
+            <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
+              <button
+                type="button"
+                onClick={handleClear}
+                className="text-gray-400 hover:text-gray-500 focus:outline-none"
+              >
+                <X className="h-5 w-5" />
+              </button>
             </div>
-        </form>
-    );
+          )}
+        </div>
+      </form>
+    </div>
+  );
 };
