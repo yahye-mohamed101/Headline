@@ -10,15 +10,12 @@ export const fetchLatestNews = async (page = 1, pageSize = 20) => {
     try {
         const response = await newsapi.v2.topHeadlines({
             language: 'en',
+            country: 'us', // Add country parameter
             page,
             pageSize
         });
 
-        return {
-            status: response.status,
-            totalResults: response.totalResults,
-            articles: response.articles
-        };
+        return response;
     } catch (error) {
         console.error('Error fetching news from API:', error);
         throw error;
@@ -27,36 +24,22 @@ export const fetchLatestNews = async (page = 1, pageSize = 20) => {
 
 export const fetchNewsByCategory = async (category: string, page = 1, pageSize = 20) => {
     try {
+        console.log('Fetching category:', category); // Debug log
+
         const response = await newsapi.v2.topHeadlines({
-            category,
+            category: category.toLowerCase(),
             language: 'en',
+            country: 'us', // Add country parameter
             page,
             pageSize
         });
 
-        return {
-            status: response.status,
-            totalResults: response.totalResults,
-            articles: response.articles
-        };
+        // Debug log
+        console.log(`Found ${response.totalResults} articles for category ${category}`);
+
+        return response;
     } catch (error) {
         console.error('Error fetching category news from API:', error);
-        throw error;
-    }
-};
-
-export const fetchSources = async () => {
-    try {
-        const response = await newsapi.v2.sources({
-            language: 'en'
-        });
-        
-        return {
-            status: response.status,
-            sources: response.sources
-        };
-    } catch (error) {
-        console.error('Error fetching sources from API:', error);
         throw error;
     }
 };

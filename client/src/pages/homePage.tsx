@@ -17,11 +17,12 @@ export const HomePage = () => {
     const loadArticles = async () => {
       try {
         setLoading(true);
+        setError(null);
         const data = await fetchNews(selectedCategory);
         setArticles(data);
-        setError(null);
       } catch (err) {
-        setError(err instanceof Error ? err.message : 'An error occurred');
+        console.error('Error loading articles:', err);
+        setError(err instanceof Error ? err.message : 'An error occurred loading articles');
       } finally {
         setLoading(false);
       }
@@ -31,19 +32,19 @@ export const HomePage = () => {
   }, [selectedCategory]); // Re-fetch when category changes
 
   const filteredArticles = articles.filter(article => {
-    const matchesCategory =
-      selectedCategory === 'all' ||
-      article.source?.name?.toLowerCase().includes(selectedCategory.toLowerCase()) ||
-      article.category?.toLowerCase() === selectedCategory.toLowerCase();
-      
     const matchesSearch =
       !searchQuery ||
       article.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
       article.description?.toLowerCase().includes(searchQuery.toLowerCase()) ||
       article.author?.toLowerCase().includes(searchQuery.toLowerCase());
 
-    return matchesCategory && matchesSearch;
+    return matchesSearch;
   });
+
+  const handleCategoryChange = (category: string) => {
+    setSelectedCategory(category);
+    setLoading(true);
+  };
 
   if (error) {
     return (
@@ -51,10 +52,10 @@ export const HomePage = () => {
         <div className="text-red-600 text-center">
           <p>Error loading articles: {error}</p>
           <button 
-            onClick={() => window.location.reload()} 
+            onClick={() => setSelectedCategory('all')} 
             className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
           >
-            Try Again
+            Reset Filters
           </button>
         </div>
       </div>
@@ -64,7 +65,7 @@ export const HomePage = () => {
   return (
     <div className="container mx-auto px-4 py-8">
       <SearchBar onSearch={setSearchQuery} />
-      <Filter onFilterChange={setSelectedCategory} selectedCategory={selectedCategory} />
+      <Filter onFilterChange={handleCategoryChange} selectedCategory={selectedCategory} />
       {loading ? (
         <Loading />
       ) : (

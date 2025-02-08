@@ -9,32 +9,28 @@ export interface ApiResponse {
   articles: Article[];
 }
 
-export const fetchNews = async (category?: string, page = 1, limit = 10): Promise<Article[]> => {
+export const fetchNews = async (category?: string, page = 1, limit = 20): Promise<Article[]> => {
   try {
     const url = new URL(`${BASE_URL}/article`);
-    if (category && category !== 'all') {
-      url.searchParams.append('category', category);
-    }
     url.searchParams.append('page', page.toString());
     url.searchParams.append('limit', limit.toString());
+    
+    if (category && category !== 'all') {
+      url.searchParams.append('category', category.toLowerCase());
+    }
+
+    console.log('Fetching from URL:', url.toString()); // Debug log
 
     const response = await fetch(url);
-    if (!response.ok) throw new Error("Failed to fetch news.");
-    const data: ApiResponse = await response.json();
-    return data.articles;
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || 'Failed to fetch news');
+    }
+    
+    const data = await response.json();
+    return data.articles || [];
   } catch (error) {
     console.error('Error fetching news:', error);
-    throw error;
-  }
-};
-
-export const fetchArticleById = async (id: string) => {
-  try {
-    const response = await fetch(`${BASE_URL}/article/${id}`);
-    if (!response.ok) throw new Error("Failed to fetch article.");
-    return await response.json();
-  } catch (error) {
-    console.error('Error fetching article:', error);
     throw error;
   }
 };
