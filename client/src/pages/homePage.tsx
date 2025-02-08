@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { SearchBar } from '../components/SearchBar';
 import { Filter } from '../components/Filter';
 import NewsList from '../components/NewsList';
+import { Loading } from '../components/Loading';
 import { fetchNews } from '../utils/newsService';
 import type { Article } from '../interfaces/HeadlineIF';
 
@@ -9,14 +10,14 @@ export const HomePage = () => {
   const [articles, setArticles] = useState<Article[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [selectedCategory, setSelectedCategory] = useState('All');
+  const [selectedCategory, setSelectedCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     const loadArticles = async () => {
       try {
         setLoading(true);
-        const data = await fetchNews();
+        const data = await fetchNews(selectedCategory);
         setArticles(data);
         setError(null);
       } catch (err) {
@@ -27,15 +28,20 @@ export const HomePage = () => {
     };
 
     loadArticles();
-  }, []);
+  }, [selectedCategory]); // Re-fetch when category changes
 
   const filteredArticles = articles.filter(article => {
     const matchesCategory =
-      selectedCategory === 'All' || article.source.name.includes(selectedCategory);
+      selectedCategory === 'all' ||
+      article.source?.name?.toLowerCase().includes(selectedCategory.toLowerCase()) ||
+      article.category?.toLowerCase() === selectedCategory.toLowerCase();
+      
     const matchesSearch =
-      searchQuery === '' ||
-      article.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      (article.description?.toLowerCase().includes(searchQuery.toLowerCase()) ?? false);
+      !searchQuery ||
+      article.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      article.description?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      article.author?.toLowerCase().includes(searchQuery.toLowerCase());
+
     return matchesCategory && matchesSearch;
   });
 
@@ -60,9 +66,7 @@ export const HomePage = () => {
       <SearchBar onSearch={setSearchQuery} />
       <Filter onFilterChange={setSelectedCategory} selectedCategory={selectedCategory} />
       {loading ? (
-        <div className="flex justify-center items-center py-20">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500" />
-        </div>
+        <Loading />
       ) : (
         <NewsList articles={filteredArticles} />
       )}

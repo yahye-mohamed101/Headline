@@ -9,9 +9,16 @@ export interface ApiResponse {
   articles: Article[];
 }
 
-export const fetchNews = async (page = 1, limit = 10): Promise<Article[]> => {
+export const fetchNews = async (category?: string, page = 1, limit = 10): Promise<Article[]> => {
   try {
-    const response = await fetch(`${BASE_URL}/article?page=${page}&limit=${limit}`);
+    const url = new URL(`${BASE_URL}/article`);
+    if (category && category !== 'all') {
+      url.searchParams.append('category', category);
+    }
+    url.searchParams.append('page', page.toString());
+    url.searchParams.append('limit', limit.toString());
+
+    const response = await fetch(url);
     if (!response.ok) throw new Error("Failed to fetch news.");
     const data: ApiResponse = await response.json();
     return data.articles;

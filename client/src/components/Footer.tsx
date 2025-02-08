@@ -9,42 +9,42 @@ export const Footer = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand Section */}
-          <div className="space-y-4">
+          <div className="space-y-6">
             <h2 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent">
               HeadLine
             </h2>
             <p className="text-gray-600 dark:text-gray-400">
               Your trusted source for the latest news and updates.
             </p>
-            <div className="flex space-x-4">
+            <div className="flex space-x-6">
               <a href="#" className="text-gray-400 hover:text-blue-500 transition-colors">
-                <Facebook className="h-5 w-5" />
+                <Facebook className="h-6 w-6" />
               </a>
               <a href="#" className="text-gray-400 hover:text-blue-500 transition-colors">
-                <Twitter className="h-5 w-5" />
+                <Twitter className="h-6 w-6" />
               </a>
               <a href="#" className="text-gray-400 hover:text-blue-500 transition-colors">
-                <Instagram className="h-5 w-5" />
+                <Instagram className="h-6 w-6" />
               </a>
             </div>
           </div>
 
           {/* Quick Links */}
-          <div>
-            <h3 className="font-semibold text-gray-900 dark:text-white mb-4">Quick Links</h3>
-            <ul className="space-y-2">
+          <div className="space-y-4">
+            <h3 className="font-semibold text-gray-900 dark:text-white text-lg">Quick Links</h3>
+            <ul className="space-y-3">
               <li>
-                <Link to="/" className="text-gray-600 dark:text-gray-400 hover:text-blue-500 transition-colors">
+                <Link to="/" className="text-gray-600 dark:text-gray-400 hover:text-blue-500 transition-colors block py-1">
                   Home
                 </Link>
               </li>
               <li>
-                <Link to="/about" className="text-gray-600 dark:text-gray-400 hover:text-blue-500 transition-colors">
+                <Link to="/about" className="text-gray-600 dark:text-gray-400 hover:text-blue-500 transition-colors block py-1">
                   About
                 </Link>
               </li>
               <li>
-                <Link to="/trending" className="text-gray-600 dark:text-gray-400 hover:text-blue-500 transition-colors">
+                <Link to="/trending" className="text-gray-600 dark:text-gray-400 hover:text-blue-500 transition-colors block py-1">
                   Trending
                 </Link>
               </li>
@@ -52,21 +52,21 @@ export const Footer = () => {
           </div>
 
           {/* Categories */}
-          <div>
-            <h3 className="font-semibold text-gray-900 dark:text-white mb-4">Categories</h3>
-            <ul className="space-y-2">
+          <div className="space-y-4">
+            <h3 className="font-semibold text-gray-900 dark:text-white text-lg">Categories</h3>
+            <ul className="space-y-3">
               <li>
-                <a href="#" className="text-gray-600 dark:text-gray-400 hover:text-blue-500 transition-colors">
+                <a href="#" className="text-gray-600 dark:text-gray-400 hover:text-blue-500 transition-colors block py-1">
                   Technology
                 </a>
               </li>
               <li>
-                <a href="#" className="text-gray-600 dark:text-gray-400 hover:text-blue-500 transition-colors">
+                <a href="#" className="text-gray-600 dark:text-gray-400 hover:text-blue-500 transition-colors block py-1">
                   Business
                 </a>
               </li>
               <li>
-                <a href="#" className="text-gray-600 dark:text-gray-400 hover:text-blue-500 transition-colors">
+                <a href="#" className="text-gray-600 dark:text-gray-400 hover:text-blue-500 transition-colors block py-1">
                   Sports
                 </a>
               </li>
@@ -74,14 +74,14 @@ export const Footer = () => {
           </div>
 
           {/* Contact */}
-          <div>
-            <h3 className="font-semibold text-gray-900 dark:text-white mb-4">Contact</h3>
-            <ul className="space-y-2">
-              <li className="flex items-center space-x-2 text-gray-600 dark:text-gray-400">
+          <div className="space-y-4">
+            <h3 className="font-semibold text-gray-900 dark:text-white text-lg">Contact</h3>
+            <ul className="space-y-3">
+              <li className="flex items-center space-x-3 text-gray-600 dark:text-gray-400">
                 <Mail className="h-5 w-5" />
                 <span>info@headline.com</span>
               </li>
-              <li className="flex items-center space-x-2 text-gray-600 dark:text-gray-400">
+              <li className="flex items-center space-x-3 text-gray-600 dark:text-gray-400">
                 <Phone className="h-5 w-5" />
                 <span>(555) 123-4567</span>
               </li>
@@ -89,7 +89,7 @@ export const Footer = () => {
           </div>
         </div>
 
-        <div className="mt-8 pt-8 border-t border-gray-200 dark:border-gray-800">
+        <div className="mt-12 pt-8 border-t border-gray-200 dark:border-gray-800">
           <p className="text-center text-gray-500 dark:text-gray-400">
             © {new Date().getFullYear()} HeadLine. All rights reserved.
           </p>

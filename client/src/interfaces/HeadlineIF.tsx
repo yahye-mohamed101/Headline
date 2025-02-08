@@ -4,6 +4,7 @@ export interface Source {
 }
 
 export interface Article {
+    category: any;
     id: string | null;
     source: Source;
     author: string | null;
