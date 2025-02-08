@@ -1,32 +1,23 @@
 import { useEffect, useState } from "react";
 import { fetchNews } from "../utils/newsService";
 import { Article } from "../interfaces/HeadlineIF";
-import { Loading } from "./Loading";
+import { Loading } from "../components/Loading";
 import "../assets/NewsFeed.css";
-
-interface Source {
-  id: string;
-  name: string;
-}
 
 const NewsFeed = () => {
   const [news, setNews] = useState<Article[]>([]);
-  const [sources, setSources] = useState<Source[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       try {
         const newsData = await fetchNews();
-        setNews(newsData);
-        
-        // Fetch sources from your backend API
-        const sourcesResponse = await fetch('http://localhost:3001/api/sources');
-        const sourcesData = await sourcesResponse.json();
-        setSources(sourcesData.sources || []);
+        setNews(newsData.articles); // Access the articles property from the response
       } catch (error) {
         console.error('Error fetching data:', error);
+        setError(error instanceof Error ? error.message : 'An error occurred');
       } finally {
         setLoading(false);
       }
@@ -37,6 +28,15 @@ const NewsFeed = () => {
 
   if (loading) return <Loading />;
 
+  if (error) {
+    return (
+      <div className="news-feed__error">
+        <p>Error: {error}</p>
+        <button onClick={() => window.location.reload()}>Try Again</button>
+      </div>
+    );
+  }
+
   return (
     <div className="news-feed">
       <header className="header">
@@ -44,16 +44,6 @@ const NewsFeed = () => {
         <p className="subtitle">Your trusted news aggregator</p>
       </header>
       <div className="content">
-        <div className="sources">
-          <h2>Sources</h2>
-          <ul className="source-list">
-            {sources.map((source) => (
-              <li key={source.id} className="source-item">
-                {source.name}
-              </li>
-            ))}
-          </ul>
-        </div>
         <div className="news">
           <h2>Latest News</h2>
           <ul className="news-list">

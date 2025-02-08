@@ -14,12 +14,11 @@ export const TrendingPage = () => {
     const loadTrendingArticles = async () => {
       try {
         setLoading(true);
-        const data = await fetchNews();
-        // Sort articles by publishedAt to get the most recent ones
-        const sortedArticles = data.sort((a, b) => 
+        const response = await fetchNews();
+        const sortedArticles = [...response.articles].sort((a: Article, b: Article) => 
           new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
         );
-        setTrendingArticles(sortedArticles.slice(0, 10)); // Get top 10 articles
+        setTrendingArticles(sortedArticles.slice(0, 10));
         setError(null);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'An error occurred');
@@ -56,7 +55,7 @@ export const TrendingPage = () => {
 
       <div className="trending__content">
         {trendingArticles.map((article, index) => (
-          <article key={article.url} className="trending__article">
+          <article key={article.url || index} className="trending__article">
             <div className="trending__rank">{index + 1}</div>
             
             <div className="trending__article-content">
@@ -106,3 +105,5 @@ export const TrendingPage = () => {
     </div>
   );
 };
+
+export default TrendingPage;

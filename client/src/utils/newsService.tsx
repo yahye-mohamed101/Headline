@@ -2,14 +2,18 @@ import { Article } from "../interfaces/HeadlineIF";
 
 const BASE_URL = "http://localhost:3001/api";
 
-export interface ApiResponse {
+export interface NewsResponse {
+  articles: Article[];
   totalResults: number;
   totalPages: number;
   currentPage: number;
-  articles: Article[];
 }
 
-export const fetchNews = async (category?: string, page = 1, limit = 20): Promise<Article[]> => {
+export const fetchNews = async (
+  category?: string,
+  page = 1,
+  limit = 12
+): Promise<NewsResponse> => {
   try {
     const url = new URL(`${BASE_URL}/article`);
     url.searchParams.append('page', page.toString());
@@ -19,8 +23,6 @@ export const fetchNews = async (category?: string, page = 1, limit = 20): Promis
       url.searchParams.append('category', category.toLowerCase());
     }
 
-    console.log('Fetching from URL:', url.toString()); // Debug log
-
     const response = await fetch(url);
     if (!response.ok) {
       const errorData = await response.json();
@@ -28,7 +30,12 @@ export const fetchNews = async (category?: string, page = 1, limit = 20): Promis
     }
     
     const data = await response.json();
-    return data.articles || [];
+    return {
+      articles: data.articles || [],
+      totalResults: data.totalResults || 0,
+      totalPages: data.totalPages || 1,
+      currentPage: data.currentPage || 1
+    };
   } catch (error) {
     console.error('Error fetching news:', error);
     throw error;

@@ -1,13 +1,14 @@
 import express from 'express';
 import { Article } from '../models/index.js';
-import { fetchLatestNews, fetchNewsByCategory, fetchSources } from '../api/newsApiService.js';
+import { fetchLatestNews, fetchNewsByCategory } from '../api/newsApiService.js';
 const router = express.Router();
 // GET endpoint to retrieve all articles
 const getArticles = async (req, res, next) => {
-    const page = Number(req.query.page) || 1;
-    const limit = Number(req.query.limit) || 20;
-    const category = req.query.category?.toLowerCase();
     try {
+        const page = Number(req.query.page) || 1;
+        const limit = Number(req.query.limit) || 20;
+        const category = req.query.category;
+        console.log('Received request for category:', category); // Debug log
         let newsData;
         if (category && category !== 'all') {
             newsData = await fetchNewsByCategory(category, page, limit);
@@ -15,6 +16,8 @@ const getArticles = async (req, res, next) => {
         else {
             newsData = await fetchLatestNews(page, limit);
         }
+        // Debug log
+        console.log(`Fetched ${newsData.articles?.length || 0} articles`);
         if (!newsData?.articles || newsData.articles.length === 0) {
             res.status(404).json({
                 status: 'error',
@@ -26,6 +29,7 @@ const getArticles = async (req, res, next) => {
             });
             return;
         }
+        // Store in database if needed
         await Article.create({
             status: newsData.status,
             totalResults: newsData.totalResults,
@@ -40,20 +44,10 @@ const getArticles = async (req, res, next) => {
         });
     }
     catch (error) {
-        next(error);
-    }
-};
-// GET endpoint to retrieve sources
-const getSources = async (_req, res, next) => {
-    try {
-        const sourcesData = await fetchSources();
-        res.json(sourcesData);
-    }
-    catch (error) {
+        console.error('Error in getArticles:', error);
         next(error);
     }
 };
 // Register routes
 router.get('/article', getArticles);
-router.get('/sources', getSources);
 export default router;
