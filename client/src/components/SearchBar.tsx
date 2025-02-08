@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Search, X } from 'lucide-react';
-import '../assets/Global.css'
 import '../assets/SearchBar.css'
 
 interface SearchBarProps {
@@ -22,16 +21,11 @@ export const SearchBar = ({ onSearch }: SearchBarProps) => {
   };
 
   return (
-    <div className="max-w-2xl mx-auto px-4 w-full">
-      <form onSubmit={handleSubmit} className="relative">
-        <div className={`
-          relative rounded-full shadow-sm transition-all duration-300
-          ${isFocused ? 'ring-2 ring-blue-500 ring-offset-2' : ''}
-        `}>
-          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-            <Search className="h-5 w-5 text-gray-400" />
-          </div>
-
+    <div className="search">
+      <form onSubmit={handleSubmit} className="search__form">
+        <div className={`search__input-container ${isFocused ? 'search__input-container--focused' : ''}`}>
+          <Search className="search__icon" />
+          
           <input
             type="text"
             value={query}
@@ -39,21 +33,17 @@ export const SearchBar = ({ onSearch }: SearchBarProps) => {
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
             placeholder="Search for news articles..."
-            className="block w-full pl-10 pr-12 py-3 border-gray-200 rounded-full focus:outline-none
-                     bg-white dark:bg-gray-800 dark:border-gray-700 dark:text-white
-                     placeholder-gray-500 dark:placeholder-gray-400"
+            className="search__input"
           />
 
           {query && (
-            <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
-              <button
-                type="button"
-                onClick={handleClear}
-                className="text-gray-400 hover:text-gray-500 focus:outline-none"
-              >
-                <X className="h-5 w-5" />
-              </button>
-            </div>
+            <button
+              type="button"
+              onClick={handleClear}
+              className="search__clear"
+            >
+              <X />
+            </button>
           )}
         </div>
       </form>

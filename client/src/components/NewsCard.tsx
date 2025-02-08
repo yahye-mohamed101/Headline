@@ -1,6 +1,5 @@
 import { Clock, User, ExternalLink } from 'lucide-react';
 import { Article } from '../interfaces/HeadlineIF';
-import '../assets/Global.css'
 import '../assets/NewsCard.css';
 
 const NewsCard = ({ article }: { article: Article }) => {
@@ -36,12 +35,12 @@ const NewsCard = ({ article }: { article: Article }) => {
         
         <div className="news-card__metadata">
           <div className="news-card__metadata-item">
-            <Clock size={16} />
+            <Clock />
             <time>{new Date(publishedAt).toLocaleDateString()}</time>
           </div>
           {author && (
             <div className="news-card__metadata-item">
-              <User size={16} />
+              <User />
               <span>{author}</span>
             </div>
           )}
@@ -54,7 +53,7 @@ const NewsCard = ({ article }: { article: Article }) => {
           className="news-card__link"
         >
           <span>Read More</span>
-          <ExternalLink size={16} className="ml-2" />
+          <ExternalLink />
         </a>
       </div>
     </article>

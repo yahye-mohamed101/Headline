@@ -5,6 +5,7 @@ import { ArticleDetails } from './pages/articleDetails.tsx';
 import { ErrorPage } from './pages/errorPage.tsx';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
+import { TrendingPage } from './pages/trendingPage.tsx';
 import './assets/Global.css'
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
                         <Route path="/" element={<HomePage />} errorElement={<ErrorPage />} />
                         <Route path="/about" element={<AboutPage />} />
                         <Route path="/article/:id" element={<ArticleDetails />} />
+                        <Route path="/trending" element={<TrendingPage />} />
                     </Routes>
                 </main>
                 <Footer />

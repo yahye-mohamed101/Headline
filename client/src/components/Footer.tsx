@@ -1,50 +1,47 @@
 import { Link } from 'react-router-dom';
 import { Facebook, Twitter, Instagram, Mail, Phone } from 'lucide-react';
 import '../assets/Footer.css'
-import '../assets/Global.css'
 
 export const Footer = () => {
   return (
-    <footer className="bg-white dark:bg-gray-900 border-t dark:border-gray-800">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+    <footer className="footer">
+      <div className="footer__container">
+        <div className="footer__grid">
           {/* Brand Section */}
-          <div className="space-y-6">
-            <h2 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent">
-              HeadLine
-            </h2>
-            <p className="text-gray-600 dark:text-gray-400">
+          <div className="footer__brand">
+            <h2 className="footer__logo">HeadLine</h2>
+            <p className="footer__description">
               Your trusted source for the latest news and updates.
             </p>
-            <div className="flex space-x-6">
-              <a href="#" className="text-gray-400 hover:text-blue-500 transition-colors">
-                <Facebook className="h-6 w-6" />
+            <div className="footer__social">
+              <a href="#" className="footer__social-link">
+                <Facebook />
               </a>
-              <a href="#" className="text-gray-400 hover:text-blue-500 transition-colors">
-                <Twitter className="h-6 w-6" />
+              <a href="#" className="footer__social-link">
+                <Twitter />
               </a>
-              <a href="#" className="text-gray-400 hover:text-blue-500 transition-colors">
-                <Instagram className="h-6 w-6" />
+              <a href="#" className="footer__social-link">
+                <Instagram />
               </a>
             </div>
           </div>
 
           {/* Quick Links */}
-          <div className="space-y-4">
-            <h3 className="font-semibold text-gray-900 dark:text-white text-lg">Quick Links</h3>
-            <ul className="space-y-3">
+          <div className="footer__section">
+            <h3 className="footer__title">Quick Links</h3>
+            <ul className="footer__links">
               <li>
-                <Link to="/" className="text-gray-600 dark:text-gray-400 hover:text-blue-500 transition-colors block py-1">
+                <Link to="/" className="footer__link">
                   Home
                 </Link>
               </li>
               <li>
-                <Link to="/about" className="text-gray-600 dark:text-gray-400 hover:text-blue-500 transition-colors block py-1">
+                <Link to="/about" className="footer__link">
                   About
                 </Link>
               </li>
               <li>
-                <Link to="/trending" className="text-gray-600 dark:text-gray-400 hover:text-blue-500 transition-colors block py-1">
+                <Link to="/trending" className="footer__link">
                   Trending
                 </Link>
               </li>
@@ -52,21 +49,21 @@ export const Footer = () => {
           </div>
 
           {/* Categories */}
-          <div className="space-y-4">
-            <h3 className="font-semibold text-gray-900 dark:text-white text-lg">Categories</h3>
-            <ul className="space-y-3">
+          <div className="footer__section">
+            <h3 className="footer__title">Categories</h3>
+            <ul className="footer__links">
               <li>
-                <a href="#" className="text-gray-600 dark:text-gray-400 hover:text-blue-500 transition-colors block py-1">
+                <a href="#" className="footer__link">
                   Technology
                 </a>
               </li>
               <li>
-                <a href="#" className="text-gray-600 dark:text-gray-400 hover:text-blue-500 transition-colors block py-1">
+                <a href="#" className="footer__link">
                   Business
                 </a>
               </li>
               <li>
-                <a href="#" className="text-gray-600 dark:text-gray-400 hover:text-blue-500 transition-colors block py-1">
+                <a href="#" className="footer__link">
                   Sports
                 </a>
               </li>
@@ -74,25 +71,23 @@ export const Footer = () => {
           </div>
 
           {/* Contact */}
-          <div className="space-y-4">
-            <h3 className="font-semibold text-gray-900 dark:text-white text-lg">Contact</h3>
-            <ul className="space-y-3">
-              <li className="flex items-center space-x-3 text-gray-600 dark:text-gray-400">
-                <Mail className="h-5 w-5" />
+          <div className="footer__section">
+            <h3 className="footer__title">Contact</h3>
+            <ul className="footer__links">
+              <li className="footer__contact-item">
+                <Mail />
                 <span>info@headline.com</span>
               </li>
-              <li className="flex items-center space-x-3 text-gray-600 dark:text-gray-400">
-                <Phone className="h-5 w-5" />
+              <li className="footer__contact-item">
+                <Phone />
                 <span>(555) 123-4567</span>
               </li>
             </ul>
           </div>
         </div>
 
-        <div className="mt-12 pt-8 border-t border-gray-200 dark:border-gray-800">
-          <p className="text-center text-gray-500 dark:text-gray-400">
-            © {new Date().getFullYear()} HeadLine. All rights reserved.
-          </p>
+        <div className="footer__bottom">
+          <p>© {new Date().getFullYear()} HeadLine. All rights reserved.</p>
         </div>
       </div>
     </footer>

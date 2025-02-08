@@ -4,31 +4,29 @@ import '../assets/AboutPage.css'
 export const AboutPage = () => {
   const features = [
     {
-      icon: <Globe className="h-8 w-8 text-blue-500" />,
+      icon: <Globe />,
       title: 'Global Coverage',
       description: 'Bringing you news from every corner of the world, keeping you informed about global events and developments.'
     },
     {
-      icon: <Users className="h-8 w-8 text-blue-500" />,
+      icon: <Users />,
       title: 'Expert Journalists',
       description: 'Our team of experienced journalists ensures accurate, unbiased reporting of news across all categories.'
     },
     {
-      icon: <Shield className="h-8 w-8 text-blue-500" />,
+      icon: <Shield />,
       title: 'Verified Sources',
       description: 'All our news stories come from reliable, verified sources to maintain the highest standards of journalism.'
     }
   ];
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900">
+    <div className="about">
       {/* Hero Section */}
-      <div className="bg-gradient-to-b from-blue-50 to-white dark:from-gray-800 dark:to-gray-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
-          <h1 className="text-4xl md:text-5xl font-bold text-center text-gray-900 dark:text-white mb-6">
-            About HeadLine
-          </h1>
-          <p className="text-xl text-gray-600 dark:text-gray-300 text-center max-w-3xl mx-auto">
+      <div className="about__hero">
+        <div className="about__hero-content">
+          <h1 className="about__title">About HeadLine</h1>
+          <p className="about__subtitle">
             Your trusted source for the latest news and updates from around the world.
             We believe in delivering accurate, timely, and unbiased news coverage.
           </p>
@@ -36,19 +34,17 @@ export const AboutPage = () => {
       </div>
 
       {/* Features Grid */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div className="about__features">
+        <div className="about__features-grid">
           {features.map((feature, index) => (
-            <div 
-              key={index}
-              className="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg hover:shadow-xl 
-                       transition-shadow duration-300"
-            >
-              <div className="mb-4">{feature.icon}</div>
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+            <div key={index} className="about__feature-card">
+              <div className="about__feature-icon">
+                {feature.icon}
+              </div>
+              <h3 className="about__feature-title">
                 {feature.title}
               </h3>
-              <p className="text-gray-600 dark:text-gray-300">
+              <p className="about__feature-description">
                 {feature.description}
               </p>
             </div>
@@ -56,27 +52,35 @@ export const AboutPage = () => {
         </div>
       </div>
 
-      {/* Contact Section */}
-      <div className="bg-gray-50 dark:bg-gray-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
-              Get in Touch
-            </h2>
-            <p className="text-gray-600 dark:text-gray-300">
-              Have questions or feedback? We'd love to hear from you.
-            </p>
-          </div>
+      {/* Mission Section */}
+      <div className="about__mission">
+        <h2 className="about__mission-title">Our Mission</h2>
+        <p className="about__mission-content">
+          At HeadLine, we strive to be your most reliable source of news and information. 
+          Our mission is to deliver accurate, unbiased, and timely news coverage that helps 
+          you stay informed about the events shaping our world. We believe in the power of 
+          quality journalism to promote understanding and inspire positive change.
+        </p>
+      </div>
 
-          <div className="max-w-2xl mx-auto">
-            <a
-              href="mailto:contact@newshub.com"
-              className="flex items-center justify-center space-x-2 px-6 py-3 bg-blue-600 
-                       text-white rounded-lg hover:bg-blue-700 transition-colors duration-200"
-            >
-              <Mail className="h-5 w-5" />
-              <span>Contact Us</span>
-            </a>
+      {/* Contact Section */}
+      <div className="about__contact">
+        <div className="about__contact-content">
+          <h2 className="about__contact-title">Get in Touch</h2>
+          <p className="about__contact-subtitle">
+            Have questions or feedback? We'd love to hear from you.
+          </p>
+          
+          <a href="mailto:contact@headline.com" className="about__contact-button">
+            <Mail />
+            <span>Contact Us</span>
+          </a>
+
+          <div className="about__contact-info">
+            <div className="about__contact-item">
+              <Mail />
+              <span>info@headline.com</span>
+            </div>
           </div>
         </div>
       </div>

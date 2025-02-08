@@ -1,0 +1,250 @@
+.trending {
+    padding: 6rem 1rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .trending__header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  
+  .trending__title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #111827;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  .trending__icon {
+    color: #2563EB;
+    width: 2rem;
+    height: 2rem;
+  }
+  
+  .trending__subtitle {
+    color: #6B7280;
+    font-size: 1.125rem;
+  }
+  
+  .trending__content {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+  
+  .trending__article {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    background-color: white;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .trending__article:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 12px -1px rgba(0, 0, 0, 0.15);
+  }
+  
+  .trending__rank {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #2563EB;
+    opacity: 0.8;
+    padding: 0.5rem 1rem;
+  }
+  
+  .trending__article-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .trending__article-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  
+  .trending__source {
+    background-color: #EFF6FF;
+    color: #2563EB;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+  
+  .trending__time {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #6B7280;
+    font-size: 0.875rem;
+  }
+  
+  .trending__time-icon {
+    width: 1rem;
+    height: 1rem;
+  }
+  
+  .trending__article-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #111827;
+    line-height: 1.4;
+  }
+  
+  .trending__article-title a {
+    text-decoration: none;
+    color: inherit;
+    transition: color 0.2s ease;
+  }
+  
+  .trending__article-title a:hover {
+    color: #2563EB;
+  }
+  
+  .trending__article-description {
+    color: #4B5563;
+    line-height: 1.6;
+  }
+  
+  .trending__article-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px solid #E5E7EB;
+  }
+  
+  .trending__author {
+    color: #6B7280;
+    font-size: 0.875rem;
+  }
+  
+  .trending__read-more {
+    color: #2563EB;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease;
+  }
+  
+  .trending__read-more:hover {
+    color: #1D4ED8;
+  }
+  
+  .trending__article-image {
+    width: 200px;
+    height: 150px;
+    border-radius: 0.5rem;
+    overflow: hidden;
+  }
+  
+  .trending__article-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .trending__error {
+    text-align: center;
+    padding: 2rem;
+    color: #DC2626;
+  }
+  
+  .trending__retry-button {
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    background-color: #2563EB;
+    color: white;
+    border-radius: 0.375rem;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+  }
+  
+  .trending__retry-button:hover {
+    background-color: #1D4ED8;
+  }
+  
+  /* Dark mode styles */
+  @media (prefers-color-scheme: dark) {
+    .trending__title {
+      color: #F3F4F6;
+    }
+  
+    .trending__subtitle {
+      color: #9CA3AF;
+    }
+  
+    .trending__article {
+      background-color: #1F2937;
+    }
+  
+    .trending__source {
+      background-color: #1E3A8A;
+      color: #93C5FD;
+    }
+  
+    .trending__article-title {
+      color: #F3F4F6;
+    }
+  
+    .trending__article-description {
+      color: #D1D5DB;
+    }
+  
+    .trending__article-footer {
+      border-top-color: #374151;
+    }
+  
+    .trending__author {
+      color: #9CA3AF;
+    }
+  
+    .trending__read-more {
+      color: #60A5FA;
+    }
+  
+    .trending__read-more:hover {
+      color: #93C5FD;
+    }
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .trending {
+      padding: 5rem 1rem 1.5rem;
+    }
+  
+    .trending__title {
+      font-size: 2rem;
+    }
+  
+    .trending__article {
+      grid-template-columns: auto 1fr;
+    }
+  
+    .trending__article-image {
+      display: none;
+    }
+  
+    .trending__rank {
+      font-size: 1.5rem;
+    }
+  
+    .trending__article-title {
+      font-size: 1.25rem;
+    }
+  }

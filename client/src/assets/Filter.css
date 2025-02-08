@@ -1,51 +1,60 @@
 .filter-container {
   width: 100%;
   overflow-x: auto;
-  padding: var(--spacing-md) 0;
-  background: var(--color-background);
-  border-bottom: 1px solid var(--color-border);
+  padding: 1.5rem 0;
+  background: white;
+  border-bottom: 1px solid #E5E7EB;
   position: sticky;
-  top: 64px;
-  z-index: 10;
-  box-shadow: var(--shadow-sm);
+  top: 64px; /* Height of the header */
+  z-index: 40;
+  margin-top: 1rem;
 }
 
 .filter-scroll {
   display: flex;
-  gap: var(--spacing-sm);
-  padding: 0 var(--spacing-md);
+  gap: 1rem;
+  padding: 0 2rem;
   min-width: max-content;
+  justify-content: center;
+  margin: 0 auto;
+  max-width: 1200px;
 }
 
 .filter-button {
   display: flex;
   align-items: center;
-  gap: var(--spacing-xs);
-  padding: var(--spacing-sm) var(--spacing-lg);
-  border-radius: var(--radius-full);
+  gap: 0.75rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 9999px;
   font-weight: 500;
-  font-size: 0.875rem;
-  transition: all var(--transition-normal);
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
   border: none;
   cursor: pointer;
-  background-color: var(--color-background-secondary);
-  color: var(--color-text-secondary);
+  background-color: #F3F4F6;
+  color: #4B5563;
+  min-width: 120px;
+  justify-content: center;
 }
 
 .filter-button--active {
-  background-color: var(--color-primary);
+  background-color: #2563EB;
   color: white;
   transform: scale(1.05);
-  box-shadow: var(--shadow-md);
+  box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2);
 }
 
 .filter-button:not(.filter-button--active):hover {
-  background-color: var(--color-background-tertiary);
+  background-color: #E5E7EB;
   transform: translateY(-1px);
 }
 
 .filter-button__icon {
   font-size: 1.25rem;
+}
+
+.filter-button__label {
+  font-weight: 500;
 }
 
 /* Hide scrollbar but keep functionality */
@@ -65,17 +74,56 @@
   position: absolute;
   top: 0;
   bottom: 0;
-  width: 30px;
+  width: 40px;
   pointer-events: none;
   z-index: 1;
 }
 
 .filter-container::before {
   left: 0;
-  background: linear-gradient(to right, var(--color-background), transparent);
+  background: linear-gradient(to right, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
 }
 
 .filter-container::after {
   right: 0;
-  background: linear-gradient(to left, var(--color-background), transparent);
+  background: linear-gradient(to left, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
+}
+
+/* Dark mode styles */
+@media (prefers-color-scheme: dark) {
+  .filter-container {
+    background: #111827;
+    border-bottom-color: #1F2937;
+  }
+
+  .filter-button {
+    background-color: #1F2937;
+    color: #D1D5DB;
+  }
+
+  .filter-button:not(.filter-button--active):hover {
+    background-color: #374151;
+  }
+
+  .filter-container::before {
+    background: linear-gradient(to right, rgba(17, 24, 39, 1), rgba(17, 24, 39, 0));
+  }
+
+  .filter-container::after {
+    background: linear-gradient(to left, rgba(17, 24, 39, 1), rgba(17, 24, 39, 0));
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .filter-scroll {
+    padding: 0 1rem;
+    justify-content: flex-start;
+  }
+
+  .filter-button {
+    min-width: 100px;
+    padding: 0.625rem 1rem;
+    font-size: 0.875rem;
+  }
 }
