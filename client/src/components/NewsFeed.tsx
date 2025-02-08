@@ -1,27 +1,41 @@
 import { useEffect, useState } from "react";
-import { fetchNews, fetchSources } from "../utils/newsService.tsx";
-import { Article } from "../interfaces/HeadlineIF.tsx";
+import { fetchNews } from "../utils/newsService";
+import { Article } from "../interfaces/HeadlineIF";
+import { Loading } from "./Loading";
 import "../assets/NewsFeed.css";
 
+interface Source {
+  id: string;
+  name: string;
+}
+
 const NewsFeed = () => {
-    const [news, setNews] = useState<Article[]>([]);  // Type the news state as an array of Article
-  const [sources, setSources] = useState<{ id: string; name: string }[]>([]); 
+  const [news, setNews] = useState<Article[]>([]);
+  const [sources, setSources] = useState<Source[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      const newsData = await fetchNews();
-      const sourcesData = await fetchSources();
-      setNews(newsData);
-      setSources(sourcesData);
-      setLoading(false);
+      try {
+        const newsData = await fetchNews();
+        setNews(newsData);
+        
+        // Fetch sources from your backend API
+        const sourcesResponse = await fetch('http://localhost:3001/api/sources');
+        const sourcesData = await sourcesResponse.json();
+        setSources(sourcesData.sources || []);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchData();
   }, []);
 
-  if (loading) return <div className="loading">Loading...</div>;
+  if (loading) return <Loading />;
 
   return (
     <div className="news-feed">
@@ -43,8 +57,8 @@ const NewsFeed = () => {
         <div className="news">
           <h2>Latest News</h2>
           <ul className="news-list">
-            {news.map((article) => (
-              <li key={article.id} className="news-item">
+            {news.map((article, index) => (
+              <li key={`${article.title}-${index}`} className="news-item">
                 <a
                   href={article.url}
                   target="_blank"

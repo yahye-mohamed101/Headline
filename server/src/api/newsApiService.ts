@@ -44,3 +44,19 @@ export const fetchNewsByCategory = async (category: string, page = 1, pageSize =
         throw error;
     }
 };
+
+export const fetchSources = async () => {
+    try {
+        const response = await newsapi.v2.sources({
+            language: 'en'
+        });
+        
+        return {
+            status: response.status,
+            sources: response.sources
+        };
+    } catch (error) {
+        console.error('Error fetching sources from API:', error);
+        throw error;
+    }
+};

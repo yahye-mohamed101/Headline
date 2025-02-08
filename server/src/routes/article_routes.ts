@@ -1,10 +1,10 @@
-import express, { Request, Response, NextFunction } from 'express';
+import express from 'express';
+import type { Request, Response, NextFunction } from 'express';
 import { Article } from '../models/index.js';
-import { fetchLatestNews, fetchNewsByCategory } from '../api/newsApiService.js';
+import { fetchLatestNews, fetchNewsByCategory, fetchSources } from '../api/newsApiService.js';
 
 const router = express.Router();
 
-// Define the route handler type
 type RouteHandler = (req: Request, res: Response, next: NextFunction) => Promise<void>;
 
 // GET endpoint to retrieve all articles
@@ -21,7 +21,6 @@ const getArticles: RouteHandler = async (req, res, next) => {
             newsData = await fetchLatestNews(page, limit);
         }
 
-        // Handle empty results
         if (!newsData?.articles || newsData.articles.length === 0) {
             res.status(404).json({
                 status: 'error',
@@ -34,41 +33,29 @@ const getArticles: RouteHandler = async (req, res, next) => {
             return;
         }
 
-        // Store the fetched articles in the database
         await Article.create({
             status: newsData.status,
             totalResults: newsData.totalResults,
             articles: newsData.articles
         });
 
-        // Send successful response
         res.json({
             status: 'success',
             totalResults: newsData.totalResults,
             totalPages: Math.ceil(newsData.totalResults / limit),
             currentPage: page,
-            articles: newsData.articles.map(article => ({
-                ...article,
-                category: category || 'general'
-            }))
+            articles: newsData.articles
         });
-    } catch (error: any) {
+    } catch (error) {
         next(error);
     }
 };
 
-// GET endpoint to retrieve a single article by ID
-const getArticleById: RouteHandler = async (req, res, next) => {
+// GET endpoint to retrieve sources
+const getSources: RouteHandler = async (_req, res, next) => {
     try {
-        const article = await Article.findByPk(req.params.id);
-        if (!article) {
-            res.status(404).json({
-                status: 'error',
-                message: 'Article not found'
-            });
-            return;
-        }
-        res.json(article);
+        const sourcesData = await fetchSources();
+        res.json(sourcesData);
     } catch (error) {
         next(error);
     }
@@ -76,6 +63,6 @@ const getArticleById: RouteHandler = async (req, res, next) => {
 
 // Register routes
 router.get('/article', getArticles);
-router.get('/article/:id', getArticleById);
+router.get('/sources', getSources);
 
 export default router;

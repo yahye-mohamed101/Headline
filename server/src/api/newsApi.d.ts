@@ -1,5 +1,6 @@
 declare module 'newsapi' {
     interface ArticleResponse {
+      sources: any;
       status: string;
       totalResults: number;
       articles: Array<{
