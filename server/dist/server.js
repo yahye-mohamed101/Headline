@@ -4,29 +4,45 @@ import express from 'express';
 import cors from 'cors';
 import routes from './routes/index.js';
 import sequelize from './config/connection.js';
-const forceDatabaseRefresh = false;
 const app = express();
 const PORT = process.env.PORT || 3001;
 app.use(cors({
-    origin: 'http://localhost:5173',
+    origin: ['http://localhost:3000', 'http://localhost:5173'],
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization']
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true
 }));
 app.use(express.json());
-// Add debugging middleware
+// Debug middleware
 app.use((req, _res, next) => {
-    console.log(`${req.method} ${req.url}`);
+    console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);
     next();
 });
-app.use('/api', routes);
-app.use(express.static('../client/dist'));
-// Add error handling middleware
-app.use((err, _req, res, _next) => {
-    console.error(err.stack);
-    res.status(500).json({ message: 'Something broke!' });
+// Health check endpoint
+app.get('/health', (_req, res) => {
+    res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
-sequelize.sync({ force: forceDatabaseRefresh }).then(() => {
-    app.listen(PORT, () => {
-        console.log(`Server is listening on port ${PORT}`);
+app.use('/api', routes);
+// Error handling
+app.use((err, _req, res, _next) => {
+    console.error('Error:', err);
+    res.status(500).json({
+        message: 'Something broke!',
+        error: process.env.NODE_ENV === 'development' ? err.message : undefined
     });
 });
+const startServer = async () => {
+    try {
+        await sequelize.sync({ force: false });
+        console.log('Database synchronized');
+        app.listen(PORT, () => {
+            console.log(`Server is running on http://localhost:${PORT}`);
+            console.log('Environment:', process.env.NODE_ENV);
+        });
+    }
+    catch (error) {
+        console.error('Failed to start server:', error);
+        process.exit(1);
+    }
+};
+startServer();
