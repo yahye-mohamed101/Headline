@@ -23,10 +23,19 @@ export const fetchNews = async (
       url.searchParams.append('category', category.toLowerCase());
     }
 
-    const response = await fetch(url);
+    console.log('Fetching from URL:', url.toString()); // Debug log
+
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include' // Add this if using cookies
+    });
+
     if (!response.ok) {
       const errorData = await response.json();
-      throw new Error(errorData.message || 'Failed to fetch news');
+      throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
     }
     
     const data = await response.json();

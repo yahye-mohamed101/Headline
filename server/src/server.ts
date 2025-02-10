@@ -10,10 +10,12 @@ const forceDatabaseRefresh = false;
 const app = express();
 const PORT = process.env.PORT || 3001;
 
+// Updated CORS configuration to allow both development ports
 app.use(cors({
-  origin: 'http://localhost:5173',
+  origin: ['http://localhost:5173', 'http://localhost:3000'],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true // Add this if you're using cookies/authentication
 }));
 
 app.use(express.json());
