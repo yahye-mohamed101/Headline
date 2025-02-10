@@ -29,8 +29,7 @@ app.use('/api', routes);
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, '../../client/dist')));
 
-// The "catchall" handler: for any request that doesn't
-// match one above, send back React's index.html file.
+// The "catchall" handler
 app.get('*', (_req: Request, res: Response) => {
   res.sendFile(path.join(__dirname, '../../client/dist/index.html'));
 });
@@ -46,9 +45,16 @@ app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
 
 const startServer = async () => {
   try {
-    await sequelize.sync({ force: false });
-    console.log('Database synchronized');
+    // Try to connect to database but don't prevent server from starting if it fails
+    try {
+      await sequelize.sync({ force: false });
+      console.log('Database synchronized');
+    } catch (dbError) {
+      console.error('Database connection failed:', dbError);
+      console.log('Server will continue without database connection');
+    }
 
+    // Start server regardless of database connection
     app.listen(PORT, () => {
       console.log(`Server is running on http://localhost:${PORT}`);
       console.log('Environment:', process.env.NODE_ENV);

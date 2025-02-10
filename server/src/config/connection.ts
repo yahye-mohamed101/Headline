@@ -3,27 +3,31 @@ dotenv.config();
 
 import { Sequelize } from 'sequelize';
 
-// Use DATABASE_URL if provided (e.g., on Render), otherwise use individual credentials
-const sequelize = process.env.DATABASE_URL
-  ? new Sequelize(process.env.DATABASE_URL, {
+let sequelize: Sequelize;
+
+try {
+  if (process.env.DATABASE_URL) {
+    sequelize = new Sequelize(process.env.DATABASE_URL, {
       dialect: 'postgres',
       dialectOptions: {
         ssl: {
           require: true,
-          rejectUnauthorized: false // Important for connecting to Render's PostgreSQL
+          rejectUnauthorized: false
         }
-      }
-    })
-  : new Sequelize(
-      process.env.DB_NAME || 'headline_db',
-      process.env.DB_USER || 'postgres',
-      process.env.DB_PASSWORD || '',
-      {
-        host: process.env.DB_HOST || 'localhost',
-        dialect: 'postgres',
-        port: parseInt(process.env.DB_PORT || '5432'),
-        logging: false
-      }
-    );
+      },
+      logging: false
+    });
+  } else {
+    sequelize = new Sequelize('sqlite::memory:', {
+      logging: false
+    });
+  }
+} catch (error) {
+  console.error('Failed to initialize database:', error);
+  // Fallback to in-memory SQLite database
+  sequelize = new Sequelize('sqlite::memory:', {
+    logging: false
+  });
+}
 
 export default sequelize;
