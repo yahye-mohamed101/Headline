@@ -21,7 +21,7 @@ export default defineConfig({
     outDir: 'dist',
     assetsDir: 'assets',
     sourcemap: false,
-    minify: 'terser',
+    minify: 'esbuild', // Changed from 'terser' to 'esbuild'
     target: 'es2018',
     cssCodeSplit: true,
     rollupOptions: {
