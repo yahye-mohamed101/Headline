@@ -1,9 +1,5 @@
 import { Article } from "../interfaces/HeadlineIF";
 
-const API_URL = import.meta.env.PROD 
-  ? '/api'  // In production, use relative path
-  : 'http://localhost:3001/api';  // In development, use full URL
-
 export interface NewsResponse {
   articles: Article[];
   totalResults: number;
@@ -17,15 +13,18 @@ export const fetchNews = async (
   limit = 12
 ): Promise<NewsResponse> => {
   try {
-    const url = new URL(`${API_URL}/article`);
-    url.searchParams.append('page', page.toString());
-    url.searchParams.append('limit', limit.toString());
-    
+    let endpoint = '/api/article';
+    const queryParams = new URLSearchParams({
+      page: page.toString(),
+      limit: limit.toString()
+    });
+
     if (category && category !== 'all') {
-      url.searchParams.append('category', category.toLowerCase());
+      queryParams.append('category', category.toLowerCase());
     }
 
-    console.log('Fetching from URL:', url.toString());
+    const url = `${endpoint}?${queryParams.toString()}`;
+    console.log('Fetching from URL:', url);
 
     const response = await fetch(url, {
       method: 'GET',
