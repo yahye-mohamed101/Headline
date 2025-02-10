@@ -1,7 +1,5 @@
 import { Article } from "../interfaces/HeadlineIF";
 
-const BASE_URL = "/api"; // Updated to use proxy
-
 export interface NewsResponse {
   articles: Article[];
   totalResults: number;
@@ -15,7 +13,7 @@ export const fetchNews = async (
   limit = 12
 ): Promise<NewsResponse> => {
   try {
-    const url = new URL(`${window.location.origin}${BASE_URL}/article`);
+    const url = new URL('/api/article', window.location.origin);
     url.searchParams.append('page', page.toString());
     url.searchParams.append('limit', limit.toString());
     
@@ -33,7 +31,8 @@ export const fetchNews = async (
     });
 
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
     }
     
     const data = await response.json();
