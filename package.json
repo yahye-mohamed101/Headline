@@ -23,6 +23,8 @@
     "dotenv": "^16.4.7",
     "express": "^4.21.1",
     "newsapi": "^2.4.1",
+    "pg": "^8.11.3",
+    "pg-hstore": "^2.3.4",
     "typescript": "^5.2.2"
   },
   "devDependencies": {

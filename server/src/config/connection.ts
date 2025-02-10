@@ -1,26 +1,28 @@
 import dotenv from 'dotenv';
 dotenv.config();
 
-console.log('dotenv loaded:', process.env.DB_USER);
-
-console.log('DB_USER:', process.env.DB_USER);  
-console.log('DB_PASSWORD:', process.env.DB_PASSWORD);  
-console.log('DB_NAME:', process.env.DB_NAME);  
-
 import { Sequelize } from 'sequelize';
 
-const sequelize = process.env.DB_URL
-  ? new Sequelize(process.env.DB_URL)
+// Use DATABASE_URL if provided (e.g., on Render), otherwise use individual credentials
+const sequelize = process.env.DATABASE_URL
+  ? new Sequelize(process.env.DATABASE_URL, {
+      dialect: 'postgres',
+      dialectOptions: {
+        ssl: {
+          require: true,
+          rejectUnauthorized: false // Important for connecting to Render's PostgreSQL
+        }
+      }
+    })
   : new Sequelize(
-      process.env.DB_NAME || '',
-      process.env.DB_USER || '',
+      process.env.DB_NAME || 'headline_db',
+      process.env.DB_USER || 'postgres',
       process.env.DB_PASSWORD || '',
       {
-        host: 'localhost',
+        host: process.env.DB_HOST || 'localhost',
         dialect: 'postgres',
-        dialectOptions: {
-          decimalNumbers: true,
-        },
+        port: parseInt(process.env.DB_PORT || '5432'),
+        logging: false
       }
     );
 
