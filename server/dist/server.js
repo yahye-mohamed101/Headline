@@ -1,29 +1,32 @@
 import dotenv from 'dotenv';
+import path from 'path';
+import { fileURLToPath } from 'url';
 dotenv.config();
 import express from 'express';
 import cors from 'cors';
 import routes from './routes/index.js';
 import sequelize from './config/connection.js';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 const app = express();
 const PORT = process.env.PORT || 3001;
+// Configure CORS
 app.use(cors({
     origin: ['http://localhost:3000', 'http://localhost:5173'],
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true
+    allowedHeaders: ['Content-Type', 'Authorization']
 }));
 app.use(express.json());
-// Debug middleware
-app.use((req, _res, next) => {
-    console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);
-    next();
-});
-// Health check endpoint
-app.get('/health', (_req, res) => {
-    res.json({ status: 'ok', timestamp: new Date().toISOString() });
-});
+// API routes
 app.use('/api', routes);
-// Error handling
+// Serve static files from the React app
+app.use(express.static(path.join(__dirname, '../../client/dist')));
+// The "catchall" handler: for any request that doesn't
+// match one above, send back React's index.html file.
+app.get('*', (_req, res) => {
+    res.sendFile(path.join(__dirname, '../../client/dist/index.html'));
+});
+// Error handling middleware
 app.use((err, _req, res, _next) => {
     console.error('Error:', err);
     res.status(500).json({

@@ -2,22 +2,28 @@ import express from 'express';
 import { Article } from '../models/index.js';
 import { fetchLatestNews, fetchNewsByCategory } from '../api/newsApiService.js';
 const router = express.Router();
-// GET endpoint to retrieve all articles
 const getArticles = async (req, res, next) => {
     try {
+        console.log('Received request with query:', req.query);
         const page = Number(req.query.page) || 1;
         const limit = Number(req.query.limit) || 20;
-        const category = req.query.category;
-        console.log('Received request for category:', category); // Debug log
+        const category = req.query.category?.toLowerCase();
+        console.log('Processing request with:', { page, limit, category });
         let newsData;
-        if (category && category !== 'all') {
-            newsData = await fetchNewsByCategory(category, page, limit);
+        try {
+            if (category && category !== 'all') {
+                newsData = await fetchNewsByCategory(category, page, limit);
+            }
+            else {
+                newsData = await fetchLatestNews(page, limit);
+            }
+            console.log('NewsAPI response:', newsData);
         }
-        else {
-            newsData = await fetchLatestNews(page, limit);
+        catch (error) {
+            console.error('NewsAPI error:', error);
+            const errorMessage = error instanceof Error ? error.message : 'Unknown NewsAPI error';
+            throw new Error(`NewsAPI error: ${errorMessage}`);
         }
-        // Debug log
-        console.log(`Fetched ${newsData.articles?.length || 0} articles`);
         if (!newsData?.articles || newsData.articles.length === 0) {
             res.status(404).json({
                 status: 'error',
@@ -29,12 +35,17 @@ const getArticles = async (req, res, next) => {
             });
             return;
         }
-        // Store in database if needed
-        await Article.create({
-            status: newsData.status,
-            totalResults: newsData.totalResults,
-            articles: newsData.articles
-        });
+        try {
+            await Article.create({
+                status: newsData.status,
+                totalResults: newsData.totalResults,
+                articles: newsData.articles
+            });
+        }
+        catch (error) {
+            console.error('Database error:', error);
+            // Don't fail the request if database storage fails
+        }
         res.json({
             status: 'success',
             totalResults: newsData.totalResults,
@@ -44,10 +55,9 @@ const getArticles = async (req, res, next) => {
         });
     }
     catch (error) {
-        console.error('Error in getArticles:', error);
+        console.error('Route error:', error);
         next(error);
     }
 };
-// Register routes
 router.get('/article', getArticles);
 export default router;
